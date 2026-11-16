@@ -1,0 +1,99 @@
+{
+  "plugin_id": "bloem.storage.s3",
+  "version": "0.4.3",
+  "checksum": "__CHECKSUM__",
+  "silo_api_version": "v1",
+  "supported_platforms": [
+    {
+      "os": "linux",
+      "arch": "amd64"
+    },
+    {
+      "os": "linux",
+      "arch": "arm64"
+    }
+  ],
+  "capabilities": [],
+  "global_config_schema": [
+    {
+      "key": "connection",
+      "title": "S3 storage connection",
+      "description": "Authenticated S3 objects. Immutable versions by default; checked ETag reads require an explicit opt-in.",
+      "json_schema": "{\"type\":\"object\",\"properties\":{\"source_id\":{\"type\":\"string\",\"pattern\":\"^[A-Za-z0-9_-]{1,128}$\"},\"source_name\":{\"type\":\"string\",\"maxLength\":256},\"bucket\":{\"type\":\"string\",\"maxLength\":63,\"default\":\"\"},\"prefix\":{\"type\":\"string\",\"maxLength\":1024,\"default\":\"\"},\"region\":{\"type\":\"string\",\"minLength\":1,\"maxLength\":64},\"endpoint\":{\"type\":\"string\",\"maxLength\":2048},\"access_key\":{\"type\":\"string\",\"maxLength\":1024},\"secret_key\":{\"type\":\"string\",\"maxLength\":4096},\"session_token\":{\"type\":\"string\",\"maxLength\":8192},\"revision_mode\":{\"type\":\"string\",\"enum\":[\"versioned\",\"checked-etag\"],\"default\":\"versioned\",\"description\":\"Versioned requires immutable VersionIds. Checked ETag detects observed changes but cannot prove unchanged bytes when the backend reuses or misreports ETag and size.\"},\"allow_loopback_http\":{\"type\":\"boolean\",\"default\":false},\"state_path\":{\"type\":\"string\"},\"probe_key\":{\"type\":\"string\",\"maxLength\":1024}},\"additionalProperties\":false}",
+      "admin_form": {
+        "fields": [
+          {
+            "key": "source_id",
+            "label": "Source ID",
+            "control": "ADMIN_FORM_CONTROL_TEXT"
+          },
+          {
+            "key": "source_name",
+            "label": "Name (optional)",
+            "description": "How this source is shown in Bloem. Leave empty to use the bucket name.",
+            "control": "ADMIN_FORM_CONTROL_TEXT"
+          },
+          {
+            "key": "bucket",
+            "label": "Bucket (optional)",
+            "control": "ADMIN_FORM_CONTROL_TEXT",
+            "description": "Leave empty to cover every bucket these keys can see; each bucket is a folder."
+          },
+          {
+            "key": "prefix",
+            "label": "Folder (optional)",
+            "control": "ADMIN_FORM_CONTROL_TEXT",
+            "description": "Leave empty to use the whole bucket (recommended). You choose folders for each library later. Needs a bucket."
+          },
+          {
+            "key": "region",
+            "label": "Region",
+            "control": "ADMIN_FORM_CONTROL_TEXT"
+          },
+          {
+            "key": "endpoint",
+            "label": "Address",
+            "description": "The https:// address your storage provider gave you.",
+            "control": "ADMIN_FORM_CONTROL_TEXT",
+            "placeholder": "https://s3.example"
+          },
+          {
+            "key": "access_key",
+            "label": "Access key",
+            "control": "ADMIN_FORM_CONTROL_PASSWORD",
+            "secret": true
+          },
+          {
+            "key": "secret_key",
+            "label": "Secret key",
+            "control": "ADMIN_FORM_CONTROL_PASSWORD",
+            "secret": true
+          },
+          {
+            "key": "session_token",
+            "label": "Session token (optional)",
+            "control": "ADMIN_FORM_CONTROL_PASSWORD",
+            "secret": true
+          },
+          {
+            "key": "revision_mode",
+            "label": "How Bloem checks files",
+            "control": "ADMIN_FORM_CONTROL_SELECT",
+            "default_value": "versioned",
+            "description": "Read exact file versions only needs versioning turned on for the bucket; files without a version are refused. Check each file before and after reading works with every bucket and still uses versions when there are any, but cannot prove the bytes are unchanged if the service reuses a fingerprint.",
+            "options": [
+              {
+                "value": "versioned",
+                "label": "Read exact file versions only (needs versioning)"
+              },
+              {
+                "value": "checked-etag",
+                "label": "Check each file before and after reading (any bucket)"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
