@@ -147,7 +147,7 @@ skipped by default. They are switched on by environment variables and need a loc
 | `S3_FIXTURE=1` | `scripts/start-fixture.sh`: a pinned SeaweedFS container on `127.0.0.1:19340` |
 | `S3_FIXTURE=1 S3_BACKEND=garage` | `scripts/start-garage-fixture.sh`: a pinned Garage container on `127.0.0.1:19341` |
 | `S3_CONFORMANCE=1`, `S3_RAW_DELIMITER=1`, `S3_OUTAGE=1` | the same containers |
-| `S3_VERSIONED_FIXTURE=1`, `S3_VERSIONED_DIR` | `scripts/start-versioned-fixture.sh`: a MinIO build on `127.0.0.1:19342`. It reuses only a pinned, previously built local copy (see the script), so it works for the maintainer's setup but needs that prepared copy. Set `GO` to a Go 1.26.8 binary. |
+| `S3_VERSIONED_FIXTURE=1`, `S3_VERSIONED_DIR` | `scripts/start-versioned-fixture.sh`: a MinIO build on `127.0.0.1:19342`. It reuses only a pinned, previously built local copy (see the script), so it needs that prepared copy. Set `GO` to a Go 1.26.8 binary. |
 
 All credentials in these fixtures are synthetic.
 
@@ -158,5 +158,5 @@ Please report vulnerabilities privately through GitHub's private vulnerability r
 
 ## Licence
 
-GNU Affero General Public License v3.0. See [LICENSE](LICENSE). Releases made before the AGPL v3 licence was added were
-published under a proprietary licence and stay under it.
+GNU Affero General Public License v3.0. See [LICENSE](LICENSE). Earlier releases were published under a proprietary
+licence and stay under it.
